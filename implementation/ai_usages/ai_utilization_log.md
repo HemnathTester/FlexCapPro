@@ -9,3 +9,5 @@ One entry per AI-assisted generation/update pass.
 - New scripts created: starter smoke tests only (no Scenario IDs assigned)
 - Gaps explicitly skipped: all product scenarios — awaiting PRD/BRD/release notes
 - Assumptions made: Android is the primary mobile target (Windows host, iOS not runnable)
+
+test test test
