@@ -1,18 +1,15 @@
 # Project Summary
 
-**Product:** Flexcap
-**Repo:** Flexcap_Automation
-**QA Model:** Script-first, AI-assisted (build once → store → execute → reuse → improve)
-**Engines:** Playwright (web) · Appium (mobile, programmatic) · Maestro (mobile, declarative)
-**Reporting:** Allure (merged across all three engines)
+Living snapshot. Read first, every AI session; update at the end of every session.
 
-## Current Coverage Snapshot
-| Domain | Web (Playwright) | Mobile (Appium) | Mobile (Maestro) | Status |
-|---|---|---|---|---|
+## Status
+Project skeleton created per RULES.md §1. No modules built yet.
 
-## Open Gaps
-- No product documents ingested yet (`knowledge/` is empty) — no real scenarios exist.
-- Starter smoke tests are placeholders until real selectors / URLs are known.
+## Coverage by module
+| Module | Criticality | Scenarios | Scripts | Stable? |
+|--------|-------------|-----------|---------|---------|
 
-## Last Updated
-_(update on every AI/human pass)_
+## Open items
+- Define platform(s) and product(s) under `source/<platform>/<product>/`.
+- Add requirement docs to `knowledge/doc/`.
+- Define the CLI command (`<cli-command> --product=<product> --module=<module>`).
