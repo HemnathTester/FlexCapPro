@@ -1,0 +1,10 @@
+# PLACEHOLDER smoke — `assertVisible: ".*"` matches anything and is NOT valid coverage
+# (scaffold Section 14/15). Replace with a real launch-screen element (testID / text
+# verified against the app) before this counts as a passing scenario.
+appId: ${APP_ID}
+tags:
+  - smoke
+  - placeholder
+---
+- launchApp
+- assertVisible: ".*"
