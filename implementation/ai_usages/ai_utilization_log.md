@@ -11,3 +11,4 @@ One entry per AI-assisted generation/update pass.
 - Assumptions made: Android is the primary mobile target (Windows host, iOS not runnable)
 
 test test test
+test automation
