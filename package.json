@@ -1,0 +1,8 @@
+{
+  "name": "flexcap-automation",
+  "private": true,
+  "scripts": {
+    "install:all": "npm --prefix source/web/chrome install && npx --prefix source/web/chrome playwright install chrome",
+    "test": "npm --prefix source/web/chrome run test --"
+  }
+}
