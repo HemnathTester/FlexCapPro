@@ -1,4 +1,0 @@
-# Maestro workspace config. appId is declared per flow (`appId: ${APP_ID}`) and
-# APP_ID / API_BASE_URL are passed in by run_maestro_suite.sh from the root .env.
-flows:
-  - "flows/*"

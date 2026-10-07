@@ -1,7 +1,0 @@
-{
-  "compilerOptions": {
-    "target": "ES2022", "module": "commonjs", "strict": true,
-    "esModuleInterop": true, "skipLibCheck": true, "outDir": "dist"
-  },
-  "include": ["*.ts", "tests/**/*.ts", "pages/**/*.ts", "fixtures/**/*.ts", "utils/**/*.ts"]
-}

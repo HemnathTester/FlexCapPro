@@ -1,19 +1,8 @@
 {
-  "name": "qa-automation-suite",
-  "version": "1.0.0",
+  "name": "flexcap-automation",
   "private": true,
-  "workspaces": ["source/projects/playwright", "source/projects/appium"],
   "scripts": {
-    "setup": "npm install && npm run setup:playwright && npm run setup:maestro",
-    "setup:playwright": "npm --workspace source/projects/playwright run install:browsers",
-    "setup:maestro": "bash source/projects/maestro/install_maestro.sh",
-    "test:web": "npm --workspace source/projects/playwright test",
-    "test:mobile:appium:android": "npm --workspace source/projects/appium run test:android",
-    "test:mobile:appium:ios": "npm --workspace source/projects/appium run test:ios",
-    "test:mobile:maestro": "bash source/projects/maestro/run_maestro_suite.sh",
-    "test:all": "npm run test:web && npm run test:mobile:appium:android && npm run test:mobile:maestro",
-    "report:allure": "allure generate reports/results/playwright reports/results/appium reports/results/maestro -o reports/allure-report --clean",
-    "report:allure:open": "allure open reports/allure-report"
-  },
-  "devDependencies": { "allure-commandline": "^2.30.0" }
+    "install:all": "npm --prefix source/web/chrome install && npx --prefix source/web/chrome playwright install chrome",
+    "test": "npm --prefix source/web/chrome run test --"
+  }
 }

@@ -1,0 +1,98 @@
+[
+  {
+    "runId": "2026-10-06T06-33-59-518Z",
+    "product": "chrome",
+    "module": "_explore",
+    "scenario": null,
+    "exitCode": 1,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T06-36-32-517Z",
+    "product": "chrome",
+    "module": "_explore",
+    "scenario": "mail reader",
+    "exitCode": 1,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T06-37-34-902Z",
+    "product": "chrome",
+    "module": "_explore",
+    "scenario": "mail reader",
+    "exitCode": 1,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T06-38-27-779Z",
+    "product": "chrome",
+    "module": "_explore",
+    "scenario": "mail debug",
+    "exitCode": 0,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T06-38-48-584Z",
+    "product": "chrome",
+    "module": "_explore",
+    "scenario": null,
+    "exitCode": 1,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T06-41-36-975Z",
+    "product": "chrome",
+    "module": "_explore",
+    "scenario": null,
+    "exitCode": 1,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T06-46-04-383Z",
+    "product": "chrome",
+    "module": "_explore",
+    "scenario": null,
+    "exitCode": 0,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T06-51-28-441Z",
+    "product": "chrome",
+    "module": "user-access",
+    "scenario": "UA-REG",
+    "exitCode": 1,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T07-03-05-543Z",
+    "product": "chrome",
+    "module": "_explore",
+    "scenario": null,
+    "exitCode": 1,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T07-07-36-071Z",
+    "product": "chrome",
+    "module": "_explore",
+    "scenario": null,
+    "exitCode": 0,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T07-16-57-486Z",
+    "product": "chrome",
+    "module": "user-access",
+    "scenario": "UA-LOGIN-01",
+    "exitCode": 0,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T07-22-08-447Z",
+    "product": "chrome",
+    "module": "user-access",
+    "scenario": "UA-LOGIN-01",
+    "exitCode": 0,
+    "completed": true
+  }
+]
