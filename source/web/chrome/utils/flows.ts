@@ -398,3 +398,83 @@ export async function openSession(browser: Browser, role: Role) {
   }
   return { context, page };
 }
+// ---------- Business Onboarding Flow Helpers ----------
+
+export const dummyTRN = () => `100${Date.now()}003`.slice(0, 15);
+export const dummyTradeLicense = () => `TL-${Date.now().toString(36).toUpperCase()}`;
+export const dummyIBAN = () => `AE210330000${Date.now()}`.slice(0, 23);
+
+export type OnboardingData = {
+  legalName?: string;
+  tradeName?: string;
+  tradeLicense?: string;
+  vatNumber?: string;
+  country?: string;
+  contactName?: string;
+  contactEmail?: string;
+  contactPhone?: string;
+  bankName?: string;
+  accountNumber?: string;
+  iban?: string;
+  swiftCode?: string;
+};
+
+export async function gotoOnboarding(page: Page) {
+  await page.goto('/onboarding').catch(() => page.goto('/airlines/onBoarding'));
+  await page.waitForTimeout(1000);
+}
+
+export async function fillOnboardingStep1(page: Page, d: OnboardingData) {
+  const nameInput = page.locator('#legalNameInput, input[name="legalName"], #businessNameInput').first();
+  if (await nameInput.isVisible()) await nameInput.fill(d.legalName ?? 'UA Supplier Trading LLC');
+
+  const tradeInput = page.locator('#tradeNameInput, input[name="tradeName"]').first();
+  if (await tradeInput.isVisible()) await tradeInput.fill(d.tradeName ?? 'UA Supplier DBA');
+
+  const licenseInput = page.locator('#tradeLicenseNumberInput, input[name="tradeLicenseNumber"]').first();
+  if (await licenseInput.isVisible()) await licenseInput.fill(d.tradeLicense ?? dummyTradeLicense());
+
+  const vatInput = page.locator('#vatNumberInput, input[name="vatNumber"], #trnInput').first();
+  if (await vatInput.isVisible()) await vatInput.fill(d.vatNumber ?? dummyTRN());
+}
+
+export async function fillOnboardingStep2(page: Page, d: OnboardingData) {
+  const contactName = page.locator('#contactNameInput, input[name="contactName"]').first();
+  if (await contactName.isVisible()) await contactName.fill(d.contactName ?? 'John Doe');
+
+  const contactEmail = page.locator('#contactEmailInput, input[name="contactEmail"]').first();
+  if (await contactEmail.isVisible()) await contactEmail.fill(d.contactEmail ?? 'admin@uasupplier.com');
+
+  const contactPhone = page.locator('#contactPhoneInput, input[name="contactPhone"]').first();
+  if (await contactPhone.isVisible()) await contactPhone.fill(d.contactPhone ?? dummyPhone());
+}
+
+export async function fillOnboardingStep3(page: Page, d: OnboardingData) {
+  const accInput = page.locator('#accountNumberInput, input[name="accountNumber"]').first();
+  if (await accInput.isVisible()) await accInput.fill(d.accountNumber ?? '12345678901');
+
+  const ibanInput = page.locator('#ibanInput, input[name="iban"]').first();
+  if (await ibanInput.isVisible()) await ibanInput.fill(d.iban ?? dummyIBAN());
+
+  const swiftInput = page.locator('#swiftCodeInput, input[name="swiftCode"]').first();
+  if (await swiftInput.isVisible()) await swiftInput.fill(d.swiftCode ?? 'ENBDAEADXXX');
+}
+
+export async function clickWizardNext(page: Page) {
+  const btn = page.getByRole('button', { name: /next|continue|proceed/i }).first();
+  if (await btn.isVisible()) await btn.click();
+}
+
+export async function clickWizardBack(page: Page) {
+  const btn = page.getByRole('button', { name: /back|previous/i }).first();
+  if (await btn.isVisible()) await btn.click();
+}
+
+export async function submitOnboarding(page: Page): Promise<PostCall[]> {
+  const submitBtn = page.getByRole('button', { name: /submit|finish|complete/i }).first();
+  return recordPosts(page, async () => {
+    if (await submitBtn.isVisible()) await submitBtn.click();
+    await page.waitForTimeout(2500);
+  });
+}
+

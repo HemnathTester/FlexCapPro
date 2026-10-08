@@ -128,6 +128,14 @@
     "completed": true
   },
   {
+    "runId": "2026-10-06T07-47-18-730Z",
+    "product": "chrome",
+    "module": "user-access",
+    "scenario": "UA - LOGIN - SUPPLIER - VALID - LOGIN - OTP.spec.ts",
+    "exitCode": 1,
+    "completed": true
+  },
+  {
     "runId": "2026-10-06T11-00-19-224Z",
     "product": "chrome",
     "module": "_diag",
@@ -156,6 +164,14 @@
     "product": "chrome",
     "module": "user-access",
     "scenario": "UA-REG-DUPLICATE-EMAIL",
+    "exitCode": 1,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T07-52-32-794Z",
+    "product": "chrome",
+    "module": "user-access",
+    "scenario": "UA-LOGIN-SUPPLIER-VALID-LOGIN-OTP",
     "exitCode": 1,
     "completed": true
   },
@@ -228,6 +244,14 @@
     "product": "chrome",
     "module": "_setup",
     "scenario": "NOPE",
+    "exitCode": 1,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T07-53-10-200Z",
+    "product": "chrome",
+    "module": "user-access",
+    "scenario": "UA-LOGIN-SUPPLIER-VALID-LOGIN-OTP",
     "exitCode": 1,
     "completed": false
   },
@@ -308,6 +332,30 @@
     "product": "chrome",
     "module": "flexcap_Sanity_reg_suit",
     "scenario": "SAN-FLEXCAP-END-TO-END-SANITY",
+    "exitCode": 1,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T09-31-06-030Z",
+    "product": "chrome",
+    "module": "user-access",
+    "scenario": "UA-LOGIN-SUPPLIER-VALID-LOGIN-OTP",
+    "exitCode": 1,
+    "completed": false
+  },
+  {
+    "runId": "2026-10-06T09-31-49-697Z",
+    "product": "chrome",
+    "module": "user-access",
+    "scenario": "UA-LOGIN-SUPPLIER-VALID-LOGIN-OTP",
+    "exitCode": 1,
+    "completed": false
+  },
+  {
+    "runId": "2026-10-06T09-47-20-107Z",
+    "product": "chrome",
+    "module": "user-access",
+    "scenario": "UA-LOGIN-PROFILE-UPDATE",
     "exitCode": 0,
     "completed": true
   },
@@ -318,5 +366,53 @@
     "scenario": null,
     "exitCode": 0,
     "completed": true
+  },
+  {
+    "runId": "2026-10-06T10-04-23-522Z",
+    "product": "chrome",
+    "module": "user-access",
+    "scenario": "UA-FP-FULL-RESET-BY-LINK",
+    "exitCode": 1,
+    "completed": false
+  },
+  {
+    "runId": "2026-10-06T10-06-40-219Z",
+    "product": "chrome",
+    "module": "user-access",
+    "scenario": "UA-FP-FULL-RESET-BY-LINK",
+    "exitCode": 1,
+    "completed": false
+  },
+  {
+    "runId": "2026-10-06T10-26-29-481Z",
+    "product": "chrome",
+    "module": "user-access",
+    "scenario": "UA-FP-FULL-RESET-BY-LINK",
+    "exitCode": 1,
+    "completed": false
+  },
+  {
+    "runId": "2026-10-06T10-35-53-317Z",
+    "product": "chrome",
+    "module": "user-access",
+    "scenario": "UA-FP-FULL-RESET-BY-LINK",
+    "exitCode": 1,
+    "completed": false
+  },
+  {
+    "runId": "2026-10-06T10-52-20-265Z",
+    "product": "chrome",
+    "module": "user-access",
+    "scenario": "UA-FP-FULL-RESET-BY-LINK",
+    "exitCode": 1,
+    "completed": false
+  },
+  {
+    "runId": "2026-10-06T11-13-53-371Z",
+    "product": "chrome",
+    "module": "user-access",
+    "scenario": "UA-FP-NEW-PASSWORD-RULES",
+    "exitCode": 1,
+    "completed": false
   }
 ]

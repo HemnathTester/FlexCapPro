@@ -68,3 +68,26 @@ Dimensions: Functional, Negative, Boundary/Edge, State, Role, Data, Integration,
 | BO-ALTERNATE-EMAIL-VERIFICATION | Y | - | - | Y | - | - | Y | - | - | - | - | REQ-BM-013. Screen location not yet found: blocked |
 | BO-STATUS-LINK-NAVIGATION | Y | - | - | Y | - | - | - | - | - | - | - | REQ-BM-024. Needs Backoffice to set those statuses: blocked until that module |
 | SAN-FLEXCAP-END-TO-END-SANITY | Y | Y | - | Y | Y | - | Y | - | Y | Y | Y | Sanity: breadth over depth, read-only. Depth lives in the module suites. |
+| BO-SUPPLIER-VALID-ONBOARDING | Y | - | - | Y | Y | Y | Y | - | Y | - | Y | REQ-BO-001..005. Complete valid Supplier wizard |
+| BO-BUYER-VALID-ONBOARDING | Y | - | - | Y | Y | Y | Y | - | Y | - | Y | REQ-BO-006..010. Complete valid Buyer wizard |
+| BO-WIZARD-STEP-NAVIGATION | Y | - | - | Y | - | - | - | - | Y | - | - | Wizard navigation, step preservation & indicators |
+| BO-MANDATORY-FIELDS-AND-INLINE-ERRORS | - | Y | - | - | - | - | - | - | Y | - | - | Empty mandatory field inline error validations |
+| BO-INVALID-FORMATS-AND-TAX-ID | - | Y | - | - | - | Y | - | - | Y | - | - | Format validation: TRN, IBAN, Trade License |
+| BO-DUPLICATE-BUSINESS-REGISTRATION | - | Y | Y | - | - | Y | Y | - | - | - | - | Duplicate TRN/Trade License rejection |
+| BO-DOCUMENT-UPLOAD-INVALID-TYPES | - | Y | Y | - | - | Y | - | - | Y | - | - | Invalid file types (.exe) & size boundary |
+| BO-FIELD-LENGTH-LIMITS-AND-SPECIAL-CHARS | - | - | Y | - | - | Y | - | - | - | - | - | Max/min length limits, special chars, whitespace |
+| BO-WIZARD-PAGE-REFRESH-AND-BACK | - | - | Y | Y | - | - | - | Y | - | - | - | Page refresh, back button & draft recovery |
+| BO-SESSION-TIMEOUT-DURING-ONBOARDING | - | - | Y | Y | - | - | - | Y | - | - | - | Inactivity timeout during wizard execution |
+| BO-E2E-CRITICAL-REGRESSION-FLOW | Y | - | - | Y | Y | Y | Y | Y | Y | - | Y | Critical E2E regression onboarding flow |
+| BO-UBO-PEP-DECLARATIONS | - | - | Y | Y | - | Y | - | - | Y | - | - | UBO ownership >25% and PEP declaration checks |
+| BO-DOCUMENT-EXPIRY-WARNINGS | - | Y | Y | - | - | Y | - | - | Y | - | - | Expired Trade License / ID document warning triggers |
+| BO-AUTHORISED-SIGNATORY-BOARD-RESOLUTION | Y | - | - | Y | Y | Y | - | - | Y | - | - | Board Resolution document upload & signatory authorization |
+| BO-FREEZONE-VS-MAINLAND-SELECTION | - | - | Y | Y | - | Y | - | - | Y | - | - | Freezone vs Mainland UAE entity type selection |
+| BO-INDUSTRY-SPECIFIC-LICENSE-CHECKS | - | - | Y | Y | - | Y | - | - | Y | - | - | Industry-specific license validation (Airlines, Logistics) |
+| BO-SETTLEMENT-PENNY-DROP-VERIFICATION | Y | - | - | Y | - | Y | Y | - | Y | - | Y | Penny-drop verification for settlement account |
+| BO-BUYER-CREDIT-LIMIT-REQUEST | Y | - | - | Y | Y | Y | - | - | Y | - | - | Buyer credit limit & Net 30/60/90 payment term requests |
+| BO-REFERRAL-PROMO-CODE-APPLY | - | - | Y | - | - | Y | Y | - | Y | - | - | Referral & partner promo code validation |
+| BO-STATUS-INFO-REQUESTED-RESUBMIT | Y | - | - | Y | Y | Y | Y | Y | Y | - | Y | Handling Backoffice info request & document re-upload |
+| BO-PARTIAL-DRAFT-SAVING-PERSISTENCE | Y | - | - | Y | - | Y | - | Y | Y | - | - | Explicit Save Draft & multi-session draft resume |
+
+

@@ -35,3 +35,37 @@ Highest Single Transaction Value, Business Logo.
 - Where the alternate email is entered (REQ-BM-013) and where the logo field sits.
 - Whether a throwaway account may be fully submitted for the two submission scenarios (BO-SUPPLIER-FULL-SUBMISSION, BO-BUYER-FULL-SUBMISSION).
 - Which test documents the UAT accepts (real-looking PDFs, sizes).
+Reusable decisions and standing checks for this module. Read before any session on business-onboarding (RULES.md §5).
+
+- Module folder: `source/web/chrome/specs/business-onboarding/` (one script per scenario ID)
+- Criticality: **Critical** (blocks core application flow after registration)
+- Scope: Supplier & Buyer onboarding wizards, Multi-step forms, Document uploads, Bank details verification, Validation & Error handling, Edge boundaries, State persistence, and E2E Regression.
+- Requirements: REQ-BO-001..015, BR-BO-001..008 (PRD v1.4)
+
+## Standing decisions
+
+1. **Environment: UAT only.** Tests run against UAT (`https://uat.freightpay.flexcappro.com`). The CLI enforces `TARGET_ENV=UAT`.
+2. **Onboarding prerequisites:** A newly registered and email-verified user lands directly on `/onboarding` or `/airlines/onBoarding` after initial login (`UA-LOGIN-NEW-USER-GOES-TO-ONBOARDING`).
+3. **Disposable onboarding data:** Each test run uses unique business details (e.g. `UA Supplier <timestamp> LLC`, unique Trade License `TL-<timestamp>`, unique Tax/VAT ID `VAT-<timestamp>`).
+4. **Step-by-step wizard structure:**
+   - Step 1: Business Profile & Organisation Info (Legal Name, Trade Name, Trade License #, Tax ID / TRN, Country of Inc)
+   - Step 2: Key Contacts & Directors (Authorized Signatory Name, Designation, Email, Mobile)
+   - Step 3: Bank Account & Settlement Details (Bank Name, Account Number, IBAN, SWIFT/BIC)
+   - Step 4: Compliance Documents (Trade License Copy, Certificate of Inc, Passport/Emirates ID of Directors)
+   - Step 5: Review, Declaration & Final Submission
+5. **Element map cached:** Locator strategies and field IDs are stored in `implementation/plans/locator-maps/Business-Onboarding-Elements.md`.
+
+## Scenario naming
+
+Scenario IDs follow the pattern `BO-<ROLE/AREA>-<WHAT-IS-CHECKED>`:
+- `BO-SUPPLIER-VALID-ONBOARDING`
+- `BO-BUYER-VALID-ONBOARDING`
+- `BO-WIZARD-STEP-NAVIGATION`
+- `BO-MANDATORY-FIELDS-AND-INLINE-ERRORS`
+- `BO-INVALID-FORMATS-AND-TAX-ID`
+- `BO-DUPLICATE-BUSINESS-REGISTRATION`
+- `BO-DOCUMENT-UPLOAD-INVALID-TYPES`
+- `BO-FIELD-LENGTH-LIMITS-AND-SPECIAL-CHARS`
+- `BO-WIZARD-PAGE-REFRESH-AND-BACK`
+- `BO-SESSION-TIMEOUT-DURING-ONBOARDING`
+- `BO-E2E-CRITICAL-REGRESSION-FLOW`

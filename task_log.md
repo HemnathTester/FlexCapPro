@@ -111,3 +111,16 @@ it was fixed, and every processed change request.
 - That run surfaced a real bug in MY OWN script, not UAT: clicking "Log out" opens a confirmation dialog ("Are you sure want to exit?" / Logout / No) that a bare click on "Log out" never dismisses, so the session never actually ended (S18/S26 failed, received URL still /airlines/onBoarding or /freightForwarders/onBoarding instead of /login).
 - Fixed by adding a shared `logout(page)` helper in utils/flows.ts (clicks Log out, confirms the dialog if it appears, then waits for /login) and switching UA-LOGIN-LOGOUT-ENDS-SESSION and the sanity spec's two Log out checks to use it instead of a bare `.click()`.
 - Re-ran the full sanity suite: 26/26 PASS, 0 fail, 0 skip, zero terminal prompts needed. BUG-SAN-001 (from an earlier unrelated backend-down run) automatically shows Resolved in the Excel Bug List now that the module passes clean.
+## 2026-10-07 (business-onboarding created)
+- Created `source/web/chrome/specs/business-onboarding/` directory and 11 Playwright `.spec.ts` files:
+  - Positive: `BO-SUPPLIER-VALID-ONBOARDING.spec.ts`, `BO-BUYER-VALID-ONBOARDING.spec.ts`, `BO-WIZARD-STEP-NAVIGATION.spec.ts`, `BO-E2E-CRITICAL-REGRESSION-FLOW.spec.ts`.
+  - Negative: `BO-MANDATORY-FIELDS-AND-INLINE-ERRORS.spec.ts`, `BO-INVALID-FORMATS-AND-TAX-ID.spec.ts`, `BO-DUPLICATE-BUSINESS-REGISTRATION.spec.ts`, `BO-DOCUMENT-UPLOAD-INVALID-TYPES.spec.ts`.
+  - Edge: `BO-FIELD-LENGTH-LIMITS-AND-SPECIAL-CHARS.spec.ts`, `BO-WIZARD-PAGE-REFRESH-AND-BACK.spec.ts`, `BO-SESSION-TIMEOUT-DURING-ONBOARDING.spec.ts`.
+- Created module planning and test case documentation:
+  - `implementation/plans/module-plans/Business-Onboarding-Plan.md` (Scope & standing decisions)
+  - `implementation/plans/locator-maps/Business-Onboarding-Elements.md` (Cached locator strategies)
+  - `implementation/plans/testcases/Business-Onboarding-TestCases.md` (Fixed-format technical test cases)
+  - `implementation/plans/testcases/Business-Onboarding-UserScenarios.md` (Plain-language end-to-end user journeys)
+- Updated `scenario-catalog.md` and `coverage-model.md` with all `BO-*` scenarios across 11 coverage dimensions.
+- Updated `source/web/chrome/utils/flows.ts` with reusable wizard step helpers (`fillOnboardingStep1..3`, `clickWizardNext`, `clickWizardBack`, `submitOnboarding`).
+
