@@ -5,3 +5,6 @@ playwright-report/
 executions/*/
 reports/results/*/*/
 source/web/chrome/fixtures/created-data.xlsx
+reports/allure/*/*/
+source/web/chrome/fixtures/auth/
+reports/excel_report/

@@ -23,6 +23,20 @@ export default defineConfig({
   reporter: [
     ['list'],
     ['json', { outputFile: path.join(root, 'executions', runId, 'playwright-results.json') }],
+    [
+      'allure-playwright',
+      {
+        resultsDir: path.join(root, 'executions', runId, 'allure-results'),
+        detail: true,
+        suiteTitle: false,
+        environmentInfo: {
+          Environment: process.env.TARGET_ENV ?? 'UAT',
+          'Base URL': process.env.BASE_URL ?? '',
+          Browser: 'Google Chrome (Desktop)',
+          'Run ID': runId,
+        },
+      },
+    ],
   ],
   outputDir: path.join(root, 'reports', 'results', product, runId),
   use: {

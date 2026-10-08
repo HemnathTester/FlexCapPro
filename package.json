@@ -2,7 +2,12 @@
   "name": "flexcap-automation",
   "private": true,
   "scripts": {
-    "install:all": "npm --prefix source/web/chrome install && npx --prefix source/web/chrome playwright install chrome",
-    "test": "npm --prefix source/web/chrome run test --"
+    "install:all": "npm --prefix source/web/chrome install",
+    "test": "npm --prefix source/web/chrome run test --",
+    "report": "npm --prefix source/web/chrome run report --",
+    "session:supplier": "npm run test -- --product=chrome --module=_setup --scenario=SESSION-SUPPLIER",
+    "session:buyer": "npm run test -- --product=chrome --module=_setup --scenario=SESSION-BUYER",
+    "sanity": "npm run test -- --product=chrome --module=flexcap_Sanity_reg_suit",
+    "excel": "npm --prefix source/web/chrome run excel --"
   }
 }

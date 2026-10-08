@@ -94,5 +94,229 @@
     "scenario": "UA-LOGIN-01",
     "exitCode": 0,
     "completed": true
+  },
+  {
+    "runId": "2026-10-06T09-59-16-286Z",
+    "product": "chrome",
+    "module": "user-access",
+    "scenario": "UA-REG-REQUIRED-FIELDS-AND-EMAIL-FORMAT|UA-LOGIN-ROUTE-GUARD-SIGNED-OUT",
+    "exitCode": 255,
+    "completed": false
+  },
+  {
+    "runId": "2026-10-06T09-59-48-940Z",
+    "product": "chrome",
+    "module": "user-access",
+    "scenario": "UA-REG-REQUIRED-FIELDS-AND-EMAIL-FORMAT,UA-LOGIN-ROUTE-GUARD-SIGNED-OUT",
+    "exitCode": 0,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T10-02-53-621Z",
+    "product": "chrome",
+    "module": "user-access",
+    "scenario": "UA-REG-REQUIRED-FIELDS-AND-EMAIL-FORMAT",
+    "exitCode": 0,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T10-57-22-164Z",
+    "product": "chrome",
+    "module": "user-access",
+    "scenario": "UA-REG-DUPLICATE-EMAIL",
+    "exitCode": 1,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T11-00-19-224Z",
+    "product": "chrome",
+    "module": "_diag",
+    "scenario": null,
+    "exitCode": 0,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T11-00-39-149Z",
+    "product": "chrome",
+    "module": "_diag",
+    "scenario": null,
+    "exitCode": 0,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T11-02-25-893Z",
+    "product": "chrome",
+    "module": "_diag",
+    "scenario": null,
+    "exitCode": 0,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T11-02-47-722Z",
+    "product": "chrome",
+    "module": "user-access",
+    "scenario": "UA-REG-DUPLICATE-EMAIL",
+    "exitCode": 1,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T11-16-06-225Z",
+    "product": "chrome",
+    "module": "_diag",
+    "scenario": null,
+    "exitCode": 0,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T11-11-07-167Z",
+    "product": "chrome",
+    "module": "user-access",
+    "scenario": "UA-LOGIN-EXPIRED-OTP-REJECTED",
+    "exitCode": 1,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T11-17-17-474Z",
+    "product": "chrome",
+    "module": "_diag",
+    "scenario": null,
+    "exitCode": 0,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T11-17-40-189Z",
+    "product": "chrome",
+    "module": "_diag",
+    "scenario": null,
+    "exitCode": 0,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T11-18-58-987Z",
+    "product": "chrome",
+    "module": "_diag",
+    "scenario": null,
+    "exitCode": 0,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T11-20-26-841Z",
+    "product": "chrome",
+    "module": "_diag",
+    "scenario": null,
+    "exitCode": 0,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T11-22-18-408Z",
+    "product": "chrome",
+    "module": "user-access",
+    "scenario": "UA-LOGIN-EXPIRED-OTP-REJECTED",
+    "exitCode": 1,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T11-32-41-250Z",
+    "product": "chrome",
+    "module": "user-access",
+    "scenario": "UA-LOGIN-EXPIRED-OTP-REJECTED",
+    "exitCode": 0,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-06T12-41-49-985Z",
+    "product": "chrome",
+    "module": "_setup",
+    "scenario": "NOPE",
+    "exitCode": 1,
+    "completed": false
+  },
+  {
+    "runId": "2026-10-07T07-46-12-030Z",
+    "product": "chrome",
+    "module": "flexcap_Sanity_reg_suit",
+    "scenario": null,
+    "exitCode": 1,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-07T07-52-16-224Z",
+    "product": "chrome",
+    "module": "flexcap_Sanity_reg_suit",
+    "scenario": null,
+    "exitCode": 1,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-07T08-54-17-855Z",
+    "product": "chrome",
+    "module": "flexcap_Sanity_reg_suit",
+    "scenario": null,
+    "exitCode": 1,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-08T06-08-44-771Z",
+    "product": "chrome",
+    "module": "flexcap_Sanity_reg_suit",
+    "scenario": null,
+    "exitCode": 1,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-08T06-09-49-417Z",
+    "product": "chrome",
+    "module": "user-access",
+    "scenario": "UA-REG-REQUIRED-FIELDS-AND-EMAIL-FORMAT,UA-LOGIN-ROUTE-GUARD-SIGNED-OUT",
+    "exitCode": 0,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-08T06-18-52-875Z",
+    "product": "chrome",
+    "module": "user-access",
+    "scenario": "UA-REG-REQUIRED-FIELDS-AND-EMAIL-FORMAT,UA-LOGIN-ROUTE-GUARD-SIGNED-OUT",
+    "exitCode": 0,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-08T06-21-20-655Z",
+    "product": "chrome",
+    "module": "flexcap_Sanity_reg_suit",
+    "scenario": null,
+    "exitCode": 1,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-08T06-48-57-043Z",
+    "product": "chrome",
+    "module": "user-access",
+    "scenario": "UA-LOGIN-LOCKOUT-AFTER-WRONG-OTPS",
+    "exitCode": 1,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-08T07-09-28-590Z",
+    "product": "chrome",
+    "module": "flexcap_Sanity_reg_suit",
+    "scenario": "SAN-FLEXCAP-END-TO-END-SANITY",
+    "exitCode": 1,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-08T07-13-01-399Z",
+    "product": "chrome",
+    "module": "flexcap_Sanity_reg_suit",
+    "scenario": "SAN-FLEXCAP-END-TO-END-SANITY",
+    "exitCode": 0,
+    "completed": true
+  },
+  {
+    "runId": "2026-10-08T07-19-12-977Z",
+    "product": "chrome",
+    "module": "flexcap_Sanity_reg_suit",
+    "scenario": null,
+    "exitCode": 0,
+    "completed": true
   }
 ]

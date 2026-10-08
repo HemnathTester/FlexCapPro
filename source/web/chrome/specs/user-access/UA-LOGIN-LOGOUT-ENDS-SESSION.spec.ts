@@ -1,13 +1,12 @@
 import { test, expect } from '../../fixtures/base';
-import { scratchAccount, loginFull } from '../../utils/flows';
+import { scratchAccount, loginFull, logout } from '../../utils/flows';
 
 test('UA-LOGIN-LOGOUT-ENDS-SESSION Logout ends the session; browser Back does not restore access', async ({ page, browser }) => {
   const acc = await scratchAccount(page, browser);
   await loginFull(page, browser, acc.email, acc.password);
   await expect(page.getByText('Log out')).toBeVisible();
 
-  await page.getByText('Log out').click();
-  await expect(page).toHaveURL(/\/login/);
+  await logout(page);
 
   await page.goBack();
   await page.waitForTimeout(1500);

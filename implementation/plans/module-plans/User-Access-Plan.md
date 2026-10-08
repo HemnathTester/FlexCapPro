@@ -27,14 +27,33 @@ the key in scenario-catalog.md and the row label in every report. Format: `UA-<A
 
 ## Decisions added 2026-10-06
 
-7. **Mail is handled by the person, not the suite (owner decision).** The suite does not read yopmail by default. Whenever an OTP, verification link or reset link is needed,
-   the run pauses in the terminal, names the mailbox to open (`https://yopmail.com/?<inbox>`) and waits for the value to be typed or pasted. This needs a real terminal.
-   `--auto-mail` re-enables the built-in yopmail reader (useful for unattended runs; it still falls back to asking).
+7. **Mail policy (owner decision, final):** the suite never reads yopmail by default. For every OTP (login, forgot password) it asks the person to type the code; for
+   "Verify Your Email" it asks the person to click the button in the mail and on the page that opens, then type "done". The suite does NOT open yopmail (its "Verify you are human" check blocks automated windows): each prompt prints an ACTION FOR YOU with the mailbox link, and the person uses their own browser. Needs a real terminal.
+   `--auto-mail` lets the suite read yopmail and open verification links itself (unattended runs). Same policy for every module (see TEST_CASE_GENERATION_TEMPLATE.md).
 8. **One script file per scenario ID** stays (RULES.md §3.5); the whole module still runs with one command.
-9. **Forgot Password in UAT is link-based**, not OTP-based as the manual suite assumed. UA-FP-TAMPERED-AND-USED-LINK, UA-FP-RESET-PAGE-WITHOUT-TOKEN and UA-FP-NEW-REQUEST-INVALIDATES-OLD-LINK were re-scoped to the reset link.
+9. **Forgot Password in UAT is link-based**, not OTP-based as the manual suite assumed. UA-FP-WRONG-AND-USED-OTP-REJECTED, UA-FP-CHANGE-PASSWORD-NEEDS-VALID-OTP and UA-FP-NEW-REQUEST-INVALIDATES-OLD-OTP were re-scoped to the reset link.
+   **CORRECTION (2026-10-06, from the owner's inbox screenshot):** Forgot Password actually sends an **OTP email** ("Forgot Password OTP", 6 digits) even though the page says "link" (a wording bug to report).
+   DONE 2026-10-06 (owner go-ahead): the six link-based UA-FP scenarios were rewritten for the OTP flow (FULL-RESET-BY-OTP, WRONG-AND-USED-OTP-REJECTED, NEW-PASSWORD-RULES, REUSE-OLD-PASSWORD, NEW-REQUEST-INVALIDATES-OLD-OTP, CHANGE-PASSWORD-NEEDS-VALID-OTP).
+   Change-password locators (password boxes, submit button) are generic until the first real run confirms them.
 10. **Main accounts:** supplier1000@yopmail.com and buyer1000@yopmail.com (password Test@1234 from `.env`). A new account lands on **Onboarding**, not the Dashboard.
 11. **Unconfirmed locators:** the reset page (password boxes, submit button) is matched generically until the first real run confirms it.
 12. `--headed` shows the browser while running; `--slowmo=500` slows it down.
+
+13. **Allure report after every run.** Stored at `reports/allure/<module>/<YYYY-MM-DD_HH-mm-ss>/index.html` (copy of the newest in `.../latest/`, which also carries trend history).
+    Grouped by module (parent suite), spec file (suite), screen (feature) and type (Positive/Negative/Edge). Each scenario shows start/stop time, every action as a step,
+    screenshots at key moments and, on failure, the screen-hierarchy dump. Open with `npm run report -- --module=user-access`.
+14. `--scenario` takes a name prefix or a comma-separated list (e.g. `--scenario=UA-REG,UA-FP`). Do not use `|`: the shell splits it.
+15. **OTP is a fixed test value (dev team decision, 2026-10-08): `STATIC_OTP` in `.env`, default `000000`.** Every login and Forgot Password OTP step types
+    this value directly (via `getMail`, which now resolves instantly with no mailbox read, window or prompt). `WRONG_OTP` (in `utils/flows.ts`) is used
+    wherever a scenario needs a deliberately wrong code, instead of a hardcoded `'000000'`. "Verify Your Email" is unchanged: still the real emailed link,
+    still prompts the person. This applies to every module, not just user-access, until the dev team reverts it.
+    - Two scenarios whose whole point was that the OTP **changes** (on resend / across requests) no longer have a real premise and were retired to
+      `test.fixme`, pending dev-team confirmation of whether the static OTP is single-use or time-limited: **UA-LOGIN-EXPIRED-OTP-REJECTED** and
+      **UA-FP-NEW-REQUEST-INVALIDATES-OLD-OTP**.
+    - `UA-LOGIN-OTP-INPUT-AND-RESEND-RULES` was adjusted: it no longer asserts resend issues a *different* code, only that the fixed OTP still logs in
+      after a resend (the box/paste/countdown checks are unchanged).
+    - `UA-FP-WRONG-AND-USED-OTP-REJECTED` step 3 (reusing an OTP after a new request) is now reported via `console.log`, not a hard assertion, since "old"
+      and "new" are the identical static value: confirm the intended reuse behaviour with the dev team before making it a hard pass/fail again.
 
 ## Known defects from the manual run (expected to fail until fixed)
 
@@ -45,8 +64,8 @@ Scenarios asserting the *correct* behaviour will fail while these exist. They ar
 
 ## Not automated (manual or out of scope)
 
-- **Verification-link expiry** and **OTP expiry waits** longer than a few minutes: time-based; validity period to be confirmed. Expiry of the OTP is
-  automated only if the period is short enough for a run.
+- **Verification-link expiry**: time-based (24 hours); not automated.
+- **OTP expiry**: superseded by decision 15 above (OTP is now a fixed test value); see UA-LOGIN-EXPIRED-OTP-REJECTED (`test.fixme`).
 - **UA-LOGIN-SESSION-TIMEOUT (30-minute session timeout)** is tagged `@slow` and runs only when requested.
 
 ## Open items (need live screen / owner input)

@@ -1,16 +1,25 @@
-import type { Browser } from '@playwright/test';
+import { chromium, type Browser } from '@playwright/test';
+
+// The mail reader always uses its OWN headless browser, whatever mode the test runs in. Reusing the test's browser made yopmail return
+// empty inboxes when the tests were run with --headed/--slowmo.
+let sharedMailBrowser: Browser | undefined;
+async function mailBrowser(): Promise<Browser> {
+  if (sharedMailBrowser && sharedMailBrowser.isConnected()) return sharedMailBrowser;
+  sharedMailBrowser = await chromium.launch({ channel: 'chrome', headless: true });
+  return sharedMailBrowser;
+}
 
 // Reads mail from public yopmail inboxes. Inboxes are shared with strangers, so we only ever act on mail
 // that is NEW since a snapshot taken before the action under test, and that matches the expected subject.
 
 export type Mail = { id: string; subject: string; sender: string; text: string; links: string[] };
 
-const BLOCK = /googlesyndication|doubleclick|adtrafficquality|googleadservices|pagead|adsbygoogle|google-analytics|googletagmanager|recaptcha/;
+const BLOCK = /googlesyndication|doubleclick|adtrafficquality|googleadservices|pagead|adsbygoogle|google-analytics|googletagmanager/;
 
 async function withInbox<T>(browser: Browser, inbox: string, fn: (page: import('@playwright/test').Page) => Promise<T>): Promise<T> {
   let lastError: unknown;
   for (let attempt = 1; attempt <= 3; attempt++) {
-    const ctx = await browser.newContext({ viewport: { width: 1200, height: 800 } });
+    const ctx = await (await mailBrowser()).newContext({ viewport: { width: 1200, height: 800 } });
     try {
       const page = await ctx.newPage();
       await page.route('**/*', (r) => {

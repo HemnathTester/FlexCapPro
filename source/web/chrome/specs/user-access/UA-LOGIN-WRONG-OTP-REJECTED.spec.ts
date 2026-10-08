@@ -1,12 +1,12 @@
 import { test, expect } from '../../fixtures/base';
-import { scratchAccount, submitLogin, typeOtp, otpBoxes, otpVerifyButton, textSeen } from '../../utils/flows';
+import { scratchAccount, submitLogin, typeOtp, otpBoxes, otpVerifyButton, textSeen, WRONG_OTP } from '../../utils/flows';
 
 test('UA-LOGIN-WRONG-OTP-REJECTED Wrong OTP is rejected and no session is created', async ({ page, browser }) => {
   const acc = await scratchAccount(page, browser);
   await submitLogin(page, acc.email, acc.password);
   await expect(otpBoxes(page).first()).toBeVisible();
 
-  await typeOtp(page, '000000');
+  await typeOtp(page, WRONG_OTP);
   await otpVerifyButton(page).click();
   const seen = await textSeen(page, 2500);
   expect(seen, 'a wrong OTP must show an error').toMatch(/invalid|incorrect|wrong|expired|not valid|try again/i);

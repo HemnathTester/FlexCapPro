@@ -32,11 +32,39 @@ Dimensions: Functional, Negative, Boundary/Edge, State, Role, Data, Integration,
 | UA-LOGIN-LOGOUT-ENDS-SESSION | Y | - | - | Y | - | - | - | - | - | - | - | REQ-UM-002 |
 | UA-LOGIN-ROLE-SWITCH | - | - | - | Y | Y | Y | - | - | - | - | - | REQ-UM-004. Needs a dual-role UAT account (pending) |
 | UA-LOGIN-PROFILE-UPDATE | Y | - | - | - | - | Y | - | - | - | - | - | REQ-UM-005. Screen location to confirm on live app |
-| UA-FP-FULL-RESET-BY-LINK | Y | - | - | Y | - | - | Y | Y | - | - | - | Disposable account only |
+| UA-FP-FULL-RESET-BY-OTP | Y | - | - | Y | - | - | Y | Y | - | - | - | Disposable account only |
 | UA-FP-UNKNOWN-AND-INVALID-EMAIL | - | Y | - | - | - | Y | - | - | - | - | - | Manual: TC_FP_EMAIL_05/06/07/09/10 |
-| UA-FP-TAMPERED-AND-USED-LINK | - | Y | Y | Y | - | - | - | - | - | - | - | Reset is link-based in UAT (not OTP): tampered/used link. Manual: TC_FP_OTP_* not applicable |
+| UA-FP-WRONG-AND-USED-OTP-REJECTED | - | Y | Y | Y | - | - | - | - | - | - | - | Reset is link-based in UAT (not OTP): tampered/used link. Manual: TC_FP_OTP_* not applicable |
 | UA-FP-NEW-PASSWORD-RULES | - | Y | - | - | - | Y | - | - | - | - | - | Manual: TC_FP_CHANGEPW_04-07 |
 | UA-FP-REUSE-OLD-PASSWORD | - | Y | - | - | - | Y | - | - | - | - | - | Manual: TC_FP_CHANGEPW_08 |
-| UA-FP-RESET-PAGE-WITHOUT-TOKEN | - | Y | - | Y | Y | - | - | - | - | - | - | Manual: TC_FP_CHANGEPW_10 |
-| UA-FP-NEW-REQUEST-INVALIDATES-OLD-LINK | - | - | Y | Y | - | - | - | Y | - | - | - | Manual: TC_FP_OTP_13, TC_FP_CHANGEPW_09 |
+| UA-FP-CHANGE-PASSWORD-NEEDS-VALID-OTP | - | Y | - | Y | Y | - | - | - | - | - | - | Manual: TC_FP_CHANGEPW_10 |
+| UA-FP-NEW-REQUEST-INVALIDATES-OLD-OTP | - | - | Y | Y | - | - | - | Y | - | - | - | Manual: TC_FP_OTP_13, TC_FP_CHANGEPW_09 |
 | UA-FP-RATE-LIMIT | - | Y | Y | - | - | - | - | - | - | - | - | Manual: TC_FP_EMAIL_08 |
+| BO-BIZINFO-VALID-DETAILS-SAVED | Y | - | - | Y | - | Y | - | - | - | - | - | REQ-BM-001. Manual: Business Info (82 cases) reference |
+| BO-BIZINFO-REQUIRED-FIELDS-AND-AUTOSCROLL | - | Y | - | - | - | - | - | - | Y | - | - | REQ-BM-018 |
+| BO-BIZINFO-FIELD-FORMATS | - | Y | - | - | - | Y | - | - | - | - | - | Manual: TC_BIZ_* |
+| BO-BIZINFO-LENGTH-AND-INJECTION | - | - | Y | - | - | Y | - | - | - | - | - | Same weakness found at Register (UA-REG-FIELD-LENGTH-LIMITS) |
+| BO-BIZINFO-VOLUME-BOUNDARIES | - | - | Y | - | - | Y | - | - | - | - | - | Manual: volume fields |
+| BO-LOGO-MANDATORY | Y | Y | - | - | - | - | - | - | - | - | - | REQ-BM-014, BR-036 |
+| BO-LOGO-FORMAT-AND-SIZE-LIMITS | - | Y | Y | - | - | - | - | - | - | - | - | REQ-BM-015, BR-036. Virus scan is not testable from the browser |
+| BO-UPLOAD-HINTS-SHOWN | - | - | - | - | - | - | - | - | Y | - | - | REQ-BM-017 |
+| BO-DOCUMENT-UPLOAD-RULES | - | Y | Y | - | - | - | - | - | - | - | - | REQ-BM-002. Manual: licence/AoA/bank-letter upload cases |
+| BO-STAKEHOLDER-VALID-ADDED | Y | - | - | - | - | Y | - | - | - | - | - | Manual: Stakeholder Details (36 cases) |
+| BO-STAKEHOLDER-ID-NUMBER-VALIDATION | - | Y | - | - | - | Y | - | - | - | - | - | REQ-BM-019 (validation logic was flagged incorrect) |
+| BO-STAKEHOLDER-SHARE-PERCENTAGE-BOUNDARIES | - | - | Y | - | - | Y | - | - | - | - | - | Manual: Share Percentage cases |
+| BO-STAKEHOLDER-DATE-OF-BIRTH-RULES | - | - | Y | - | - | Y | - | - | - | - | - | Manual: Date of Birth cases |
+| BO-SIGNATORY-VALID-AND-EMAIL-RULES | - | Y | - | - | - | Y | - | - | - | - | - | REQ-BM-010 (the DocuSign agreement goes only to this email) |
+| BO-BANK-IBAN-VALIDATION | - | Y | - | - | - | Y | - | - | - | - | - | REQ-BA-001, REQ-BA-002. Supplier wizard only |
+| BO-BANK-CURRENCY-AED-ONLY | - | - | Y | - | - | - | - | - | - | - | Y | REQ-BM-025, BR-041 |
+| BO-ADMIN-DETAILS-VALIDATION | - | Y | - | - | - | Y | - | - | - | - | - | Manual: Account Admin Details (18 cases) |
+| BO-INVOICE-TEMPLATES-FILE-RULES | - | Y | Y | - | - | - | - | - | - | - | - | Manual: Invoice Templates (11 cases) |
+| BO-TERMS-CLICK-TO-VIEW-AND-ACCEPT | Y | - | - | - | - | - | - | - | Y | - | - | REQ-BM-022 |
+| BO-STEPPER-AND-COMPLETION-INDICATOR | - | - | - | Y | - | - | - | - | Y | - | - | REQ-BM-021 |
+| BO-STEP-ORDER-CANNOT-BE-SKIPPED | - | Y | - | Y | - | - | - | - | - | - | - | Manual: Stepper & Progress |
+| BO-SAVE-DRAFT-AND-RESUME | - | - | - | Y | - | - | - | Y | - | - | - | Manual: Save as Draft & Resume (8 cases) |
+| BO-REVIEW-PAGE-SHOWS-ENTERED-DETAILS | Y | - | - | - | - | Y | - | - | - | - | - | REQ-BM-020 |
+| BO-SUPPLIER-FULL-SUBMISSION | Y | - | - | Y | - | - | Y | - | - | - | - | REQ-BM-003, BR-001. IRREVERSIBLE in UAT: needs your approval before it runs |
+| BO-BUYER-FULL-SUBMISSION | Y | - | - | Y | - | - | Y | - | - | - | - | REQ-BM-003. IRREVERSIBLE in UAT: needs your approval before it runs |
+| BO-ALTERNATE-EMAIL-VERIFICATION | Y | - | - | Y | - | - | Y | - | - | - | - | REQ-BM-013. Screen location not yet found: blocked |
+| BO-STATUS-LINK-NAVIGATION | Y | - | - | Y | - | - | - | - | - | - | - | REQ-BM-024. Needs Backoffice to set those statuses: blocked until that module |
+| SAN-FLEXCAP-END-TO-END-SANITY | Y | Y | - | Y | Y | - | Y | - | Y | Y | Y | Sanity: breadth over depth, read-only. Depth lives in the module suites. |

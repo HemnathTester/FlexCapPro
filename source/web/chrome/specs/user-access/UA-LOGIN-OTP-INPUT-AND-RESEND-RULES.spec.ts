@@ -1,12 +1,9 @@
 import { test, expect } from '../../fixtures/base';
-import { scratchAccount, submitLogin, otpBoxes, otpVerifyButton, otpFrom, typeOtp, getMail, inboxOf, textSeen, snap } from '../../utils/flows';
-import { yopmail } from '../../utils/yopmail';
+import { scratchAccount, submitLogin, otpBoxes, otpVerifyButton, typeOtp, textSeen, STATIC_OTP } from '../../utils/flows';
 
-test('UA-LOGIN-OTP-INPUT-AND-RESEND-RULES OTP input rules: verify blocked until complete, non-numeric rejected, paste fills all boxes, resend disabled during countdown, old OTP invalid after resend', async ({ page, browser }) => {
+test('UA-LOGIN-OTP-INPUT-AND-RESEND-RULES OTP input rules: verify blocked until complete, non-numeric rejected, paste fills all boxes, resend disabled during countdown, OTP still works after resend', async ({ page, browser }) => {
   test.setTimeout(6 * 60 * 1000);
   const acc = await scratchAccount(page, browser);
-  const inbox = inboxOf(acc.email);
-  const known = await snap(browser, inbox);
   await submitLogin(page, acc.email, acc.password);
   const boxes = otpBoxes(page);
   await expect(boxes.first()).toBeVisible();
@@ -40,20 +37,16 @@ test('UA-LOGIN-OTP-INPUT-AND-RESEND-RULES OTP input rules: verify blocked until 
 
   // 4. Resend is unavailable while the countdown runs, and available after it.
   await expect(page.getByText(/Resend OTP in\s*\d{2}:\d{2}/)).toBeVisible();
-  const first = await getMail(browser, inbox, known, /login code/i, 'the login code mail');
-  const oldCode = otpFrom(first.text);
-  const known2 = new Set([...known, first.id]);
   await expect(page.getByText(/Resend OTP in\s*\d{2}:\d{2}/)).toBeHidden({ timeout: 90000 });
   const resend = page.getByText(/^\s*Resend OTP\s*$/);
   await expect(resend, 'Resend OTP link must be available after the countdown').toBeVisible();
   await resend.click();
 
-  // 5. A new OTP arrives and the old one no longer works.
-  const second = await getMail(browser, inbox, known2, /login code/i, 'the second login code mail');
-  const newCode = otpFrom(second.text);
-  expect(newCode, 'resend must issue a different OTP').not.toBe(oldCode);
-  await typeOtp(page, oldCode);
+  // 5. The fixed test OTP still logs in after a resend.
+  // (OTP is now a static test value set by the dev team, so "a different code is issued on resend" no longer applies;
+  // what matters is that resend doesn't break the login path.)
+  await typeOtp(page, STATIC_OTP);
   await verify.click();
-  const seen = await textSeen(page, 2500);
-  expect(await page.getByText('Log out').isVisible(), `the OLD OTP was accepted after resend (page said: ${seen.slice(0, 150)})`).toBe(false);
+  const seen = await textSeen(page, 3000);
+  await expect(page.getByText('Log out'), `login after resend did not succeed (page said: ${seen.slice(0, 150)})`).toBeVisible({ timeout: 15000 });
 });

@@ -8,7 +8,7 @@ function catalog(root) {
   if (!fs.existsSync(file)) return map;
   for (const line of fs.readFileSync(file, 'utf8').split('\n')) {
     const c = line.split('|').map((s) => s.trim());
-    if (/^UA-[A-Z0-9-]+$/.test(c[1] ?? '')) map[c[1]] = { module: c[2], desc: c[3], type: c[4] };
+    if (/^[A-Z]{2,5}-[A-Z0-9-]+$/.test(c[1] ?? '')) map[c[1]] = { module: c[2], desc: c[3], type: c[4] };
   }
   return map;
 }
@@ -28,7 +28,7 @@ export function buildReport(root, runId, moduleName) {
   const rows = specs.map((spec) => {
     const t = spec.tests?.[0];
     const r = t?.results?.at(-1);
-    const id = (spec.title.match(/^(UA-[A-Z0-9-]+)\b/) ?? [])[1] ?? spec.title;
+    const id = (spec.title.match(/^([A-Z]{2,5}-[A-Z0-9-]+)\b/) ?? [])[1] ?? spec.title;
     const ann = (t?.annotations ?? []).find((a) => a.type === 'skip' || a.type === 'fixme');
     let result = 'PASSED';
     if (t?.status === 'skipped' || r?.status === 'skipped') result = 'NOT EXECUTED';

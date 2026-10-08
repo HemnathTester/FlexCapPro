@@ -1,12 +1,12 @@
 import { test, expect } from '../../fixtures/base';
-import { createVerifiedAccount, startForgotPassword, getMail, inboxOf, snap, resetLinkOf, setNewPassword } from '../../utils/flows';
+import { createVerifiedAccount, startForgotPassword, forgotOtp, inboxOf, snap, submitForgotOtp, reachedChangePassword, setNewPassword } from '../../utils/flows';
 
-test('UA-FP-NEW-PASSWORD-RULES New password policy violations and confirm-mismatch are rejected', async ({ page, browser }) => {
+test('UA-FP-NEW-PASSWORD-RULES New password policy violations and confirm-mismatch are rejected on the change-password step', async ({ page, browser }) => {
   const acc = await createVerifiedAccount(page, browser, { role: 'Supplier', label: 'NEWPWRULES' });
-  const known = await snap(browser, inboxOf(acc.email));
+  const known = await snap(browser, inboxOf(acc.email), 'otp');
   await startForgotPassword(page, acc.email);
-  const mail = await getMail(browser, inboxOf(acc.email), known, /reset|password/i, 'the password reset email (link)');
-  const link = resetLinkOf(mail.links);
+  await submitForgotOtp(page, await forgotOtp(browser, inboxOf(acc.email), known));
+  expect(await reachedChangePassword(page), 'a correct OTP must lead to the change-password step').toBe(true);
 
   const failures: string[] = [];
   const cases: [string, string, string?][] = [
@@ -18,7 +18,6 @@ test('UA-FP-NEW-PASSWORD-RULES New password policy violations and confirm-mismat
     ['confirm differs', 'Valid@12345', 'Other@12345'],
   ];
   for (const [name, pw, confirm] of cases) {
-    await page.goto(link);
     const r = await setNewPassword(page, pw, confirm);
     if (r.accepted) failures.push(`${name}: ACCEPTED`);
     else if (!/password|match|character|digit|upper|lower|special|length|least|valid/i.test(r.seen.replace(/Enter your password|Confirm your password|New password/gi, ''))) failures.push(`${name}: rejected without a visible message`);

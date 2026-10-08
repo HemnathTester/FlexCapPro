@@ -55,12 +55,13 @@ Duplicate email: the server answers 400, and the page showed no message in a pos
 
 | Element | How to find it | Notes |
 |---|---|---|
-| Heading | "Forgot password" | text: "Please enter your registered email address below. We'll send you a **link** to reset your password." |
+| Heading | "Forgot password" | text says "We'll send you a **link**": WRONG, the flow sends an OTP (wording bug) |
 | Email | `#registeredEmail` | placeholder "Registered Email" |
-| Submit | `button[type=submit]` "Submit" | |
+| Submit | `button[type=submit]` with text "Submit" | API `POST /auth/users/forgot-password` -> 200 "If your email is registered, you will receive an OTP shortly." (same for any email) |
 | Back | text "Back to Login" | |
-
-The reset is link-based, not OTP-based as the manual suite assumed. Reset-page elements are added below once captured.
+| OTP step (same panel, after Submit) | `input.otp-input` x6, button "Verify →" (disabled until 6 digits), text "Resend OTP in 00:56" | same component as the login OTP |
+| OTP mail | subject "Forgot Password OTP", sender Freightpay, 6-digit code in a grey box | |
+| Change-password step (after a valid OTP) | NOT YET CAPTURED: scripts use `input[type=password]:visible` and the last visible `button[type=submit]` until the first real run confirms them | |
 
 ## Mail reader (yopmail)
 

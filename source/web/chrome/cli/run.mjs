@@ -1,6 +1,6 @@
 // One CLI for every run (RULES.md §2):
-//   npm run test -- --product=chrome --module=<module> [--scenario=<ID>] [--fresh] [--slow] [--headed] [--slowmo=<ms>]
-// --auto-mail: let the suite read yopmail itself (default: it asks you for each OTP/link, naming the mailbox).
+//   npm run test -- --product=chrome --module=<module> [--scenario=<ID or name prefix>[,<more>]] [--fresh] [--slow] [--headed] [--slowmo=<ms>] [--no-excel]
+// Mail policy: the suite asks you for every OTP and for the "Verify Your Email" step (it names the mailbox). --auto-mail lets it read yopmail itself.
 // --headed: show the browser window while the tests run. --slowmo=500 slows every action by 500 ms so you can follow it.
 // --fresh: ignore stored data in fixtures/created-data.xlsx and create new data (new rows are still recorded).
 // --slow:  also run scenarios tagged @slow (e.g. the 30-minute session timeout).
@@ -13,6 +13,8 @@ import readline from 'node:readline';
 import { fileURLToPath } from 'node:url';
 import dotenv from 'dotenv';
 import { buildReport } from './report.mjs';
+import { generateAllure } from './allure.mjs';
+import { generateExcel } from './excel.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, '../../../..');
@@ -49,7 +51,10 @@ const runId = new Date().toISOString().replace(/[:.]/g, '-');
 fs.mkdirSync(path.join(root, 'executions', runId), { recursive: true });
 
 const pwArgs = ['playwright', 'test', `specs/${mod}`];
-if (args.scenario) pwArgs.push('-g', args.scenario);
+if (args.scenario) {
+  const pattern = args.scenario.split(',').map((s) => s.trim()).filter(Boolean).join('|');
+  pwArgs.push('-g', `"${pattern}"`);
+}
 
 const interactive = Boolean(process.stdin.isTTY) && args['no-ask'] !== 'true';
 const child = spawn('npx', pwArgs, {
@@ -64,6 +69,9 @@ const child = spawn('npx', pwArgs, {
     ...(args.slow ? { RUN_SLOW: '1' } : {}),
     ...(args.headed ? { HEADED: '1' } : {}),
     ...(args['auto-mail'] ? { MAIL_MODE: 'auto' } : {}),
+    ...(args['open-mail-window'] ? { OPEN_MAIL_WINDOW: '1' } : {}),
+    ...(args['ask-mail'] ? { MAIL_MODE: 'ask' } : {}),
+    ...(args['no-step-shots'] ? { NO_STEP_SHOTS: '1' } : {}),
     ...(args.slowmo ? { SLOWMO: String(args.slowmo) } : {}),
     ...(interactive ? { ASK_USER: '1' } : {}),
   },
@@ -91,7 +99,7 @@ const watcher = interactive
     }, 1000)
   : null;
 
-child.on('exit', (code) => {
+child.on('exit', async (code) => {
   if (watcher) clearInterval(watcher);
   rl?.close();
   const resultsFile = path.join(root, 'executions', runId, 'playwright-results.json');
@@ -122,10 +130,31 @@ child.on('exit', (code) => {
   console.log(`\n==== ${mod}: scenario results (failures first) ====`);
   for (const r of report.rows) {
     const tag = r.result === 'PASSED' ? 'PASS' : r.result === 'FAILED' ? 'FAIL' : 'SKIP';
-    console.log(`${pad(tag, 5)} ${pad(r.id, 13)} ${pad(r.type, 9)} ${r.knownDefect ? '[known defect] ' : ''}${r.desc.slice(0, 90)}`);
+    console.log(`${pad(tag, 5)} ${pad(r.id, 46)} ${pad(r.type, 9)} ${r.knownDefect ? '[known defect] ' : ''}${r.desc.slice(0, 90)}`);
+  }
+  const sanityFile = path.join(root, 'executions', runId, 'sanity-checks.json');
+  if (fs.existsSync(sanityFile)) {
+    const checks = JSON.parse(fs.readFileSync(sanityFile, 'utf8'));
+    console.log('\n==== Sanity checks, in the order they ran ====');
+    for (const c of checks) console.log(`${pad(c.status === 'pass' ? 'PASS' : c.status === 'fail' ? 'FAIL' : 'SKIP', 5)} ${pad(c.id, 4)} ${pad('[' + c.phase + ']', 11)} ${c.name}${c.detail ? '   -> ' + c.detail : ''}`);
+    const tally = (st) => checks.filter((c) => c.status === st).length;
+    console.log(`\nSANITY RESULT: ${tally('pass')} passed, ${tally('fail')} failed, ${tally('skip')} skipped, of ${checks.length} checks`);
+    const md = ['', '## Sanity checks', '', '| # | Phase | Result | Check | Detail |', '|---|---|---|---|---|', ...checks.map((c) => `| ${c.id} | ${c.phase} | ${c.status.toUpperCase()} | ${c.name} | ${(c.detail || '').replace(/\|/g, '/')} |`)].join('\n');
+    fs.appendFileSync(path.join(root, 'executions', runId, 'triage.md'), md + '\n');
   }
   console.log('\nBy type:');
   for (const [t, v] of Object.entries(report.byType)) console.log(`  ${pad(t, 9)} passed ${v.PASSED}, failed ${v.FAILED}, not executed ${v['NOT EXECUTED']}`);
+  const allure = generateAllure({ root, runId, mod, chromeDir: path.resolve(here, '..') });
+  if (allure.error) console.log(`\nAllure report could not be built: ${allure.error}`);
+  else console.log(`\nAllure report: ${path.relative(root, path.join(allure.out, 'index.html'))}   Open it with: npm run report -- --module=${mod}`);
+  if (args['no-excel'] !== 'true') {
+    try {
+      const xl = await generateExcel({ root, runId, mod, rows: report.rows, stamp: allure.stamp });
+      console.log('\nExcel report: ' + path.relative(root, xl.file) + '   (' + xl.total + ' test cases: ' + xl.pass + ' PASS, ' + xl.fail + ' FAIL; ' + xl.steps + ' steps with ' + xl.shots + ' screenshots; open bugs: ' + xl.openBugs + ')');
+    } catch (e) {
+      console.log('\nExcel report could not be built: ' + String(e).split('\n')[0]);
+    }
+  }
   console.log(`\nRun ${runId} complete. Triage report: executions/${runId}/triage.md   Evidence: reports/results/${product}/${runId}/`);
   process.exit(code ?? 1);
 });
